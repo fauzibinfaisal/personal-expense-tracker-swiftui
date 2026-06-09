@@ -37,7 +37,7 @@ public struct ExpenseListView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    viewModel.send(.addExpensePlaceholder)
+                    router.navigate(to: .addExpense)
                 } label: {
                     Image(systemName: "plus")
                         .font(.system(size: 16, weight: .bold))
@@ -50,9 +50,10 @@ public struct ExpenseListView: View {
                                 .stroke(.white.opacity(0.3), lineWidth: 1)
                         )
                 }
+                .accessibilityLabel("Add expense")
             }
         }
-        .task {
+        .onAppear {
             viewModel.send(.load)
         }
     }
@@ -69,7 +70,7 @@ public struct ExpenseListView: View {
             VStack {
                 Spacer()
                 EmptyStateView {
-                    viewModel.send(.addExpensePlaceholder)
+                    router.navigate(to: .addExpense)
                 }
                 Spacer()
             }

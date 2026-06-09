@@ -32,7 +32,6 @@ public final class ExpenseListViewModel: ObservableObject {
             // Intent placeholder for future details navigation
             break
         case .addExpensePlaceholder:
-            // Intent placeholder for future creation flow
             break
         }
     }

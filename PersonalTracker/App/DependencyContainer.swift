@@ -45,4 +45,11 @@ public final class DependencyContainer {
             getExpensesUseCase: makeGetExpensesUseCase()
         )
     }
+    
+    /// Resolves and provides the ViewModel driving the Add Expense presentation interface.
+    public func makeAddExpenseViewModel() -> AddExpenseViewModel {
+        AddExpenseViewModel(
+            addExpenseUseCase: makeAddExpenseUseCase()
+        )
+    }
 }

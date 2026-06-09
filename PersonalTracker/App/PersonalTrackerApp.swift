@@ -22,12 +22,12 @@ struct PersonalTrackerApp: App {
                         case .expenseList:
                             ExpenseListView(viewModel: container.makeExpenseListViewModel())
                         case .addExpense:
-                            // Ready for future presentation view integration
-                            ContentUnavailableView {
-                                Label("Add Expense", systemImage: "plus.circle")
-                            } description: {
-                                Text("Feature coming soon.")
-                            }
+                            AddExpenseView(
+                                viewModel: container.makeAddExpenseViewModel(),
+                                onSuccess: {
+                                    router.navigateBack()
+                                }
+                            )
                         case .settings:
                             ContentUnavailableView {
                                 Label("Settings", systemImage: "gearshape")
