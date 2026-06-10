@@ -15,17 +15,17 @@ public final class DependencyContainer {
     /// Singleton access point for dependency resolution.
     public static let shared = DependencyContainer()
     
+    private let swiftDataStack: SwiftDataStack
     public let modelContainer: ModelContainer
     private let expenseRepository: any ExpenseRepository
     
     private init() {
         do {
-            let schema = Schema([ExpenseSDModel.self])
-            let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-            self.modelContainer = try ModelContainer(for: schema, configurations: [config])
-            self.expenseRepository = DefaultExpenseRepository(modelContainer: modelContainer)
+            self.swiftDataStack = try SwiftDataStack()
+            self.modelContainer = swiftDataStack.modelContainer
+            self.expenseRepository = ExpenseRepositoryImpl(modelContainer: modelContainer)
         } catch {
-            fatalError("Failed to initialize SwiftData ModelContainer: \(error)")
+            fatalError("Failed to initialize local persistence: \(error.localizedDescription)")
         }
     }
     

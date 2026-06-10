@@ -10,34 +10,11 @@ import SwiftData
 
 @main
 struct PersonalTrackerApp: App {
-    @StateObject private var router = AppRouter()
     private let container = DependencyContainer.shared
     
     var body: some Scene {
         WindowGroup {
-            NavigationStack(path: $router.path) {
-                ExpenseListView(viewModel: container.makeExpenseListViewModel())
-                    .navigationDestination(for: AppRouter.Route.self) { route in
-                        switch route {
-                        case .expenseList:
-                            ExpenseListView(viewModel: container.makeExpenseListViewModel())
-                        case .addExpense:
-                            AddExpenseView(
-                                viewModel: container.makeAddExpenseViewModel(),
-                                onSuccess: {
-                                    router.navigateBack()
-                                }
-                            )
-                        case .settings:
-                            ContentUnavailableView {
-                                Label("Settings", systemImage: "gearshape")
-                            } description: {
-                                Text("Configuration options coming soon.")
-                            }
-                        }
-                    }
-            }
-            .environmentObject(router)
+            AppRootView(container: container)
         }
         .modelContainer(container.modelContainer)
     }

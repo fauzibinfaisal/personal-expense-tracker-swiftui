@@ -23,11 +23,17 @@ public final class ExpenseListViewModel: ObservableObject {
     /// Processes inbound user intents or system actions.
     /// - Parameter action: The Action to execute.
     public func send(_ action: ExpenseListAction) {
+        Task {
+            await perform(action)
+        }
+    }
+    
+    /// Processes an action and waits for all resulting state changes to complete.
+    /// - Parameter action: The Action to execute.
+    public func perform(_ action: ExpenseListAction) async {
         switch action {
         case .load, .refresh:
-            Task {
-                await fetchExpenses()
-            }
+            await fetchExpenses()
         case .selectExpense:
             // Intent placeholder for future details navigation
             break
